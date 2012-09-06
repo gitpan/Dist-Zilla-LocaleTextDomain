@@ -1,0 +1,62 @@
+{
+   "abstract" : "Compile Local::TextDomain language files",
+   "author" : [
+      "David E. Wheeler <david@justatheory.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300021, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Dist-Zilla-LocaleTextDomain",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.35"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30",
+            "Module::Build" : "0.35"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "Dist::Zilla::File::FromCode" : "0",
+            "Dist::Zilla::Role::FileGatherer" : "0",
+            "File::Path" : "2.07",
+            "IPC::Cmd" : "0",
+            "Moose" : "0",
+            "Moose::Util::TypeConstraints" : "0",
+            "MooseX::Types::Path::Class" : "0",
+            "Path::Class" : "0",
+            "namespace::autoclean" : "0",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Capture::Tiny" : "0",
+            "Test::DZil" : "0",
+            "Test::More" : "0.90"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/theory/dist-zilla-localetextdomain.git",
+         "web" : "https://github.com/theory/dist-zilla-localetextdomain"
+      }
+   },
+   "version" : "0.10"
+}
+
