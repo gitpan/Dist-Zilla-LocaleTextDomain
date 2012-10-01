@@ -1,10 +1,10 @@
 {
-   "abstract" : "Compile Local::TextDomain language files",
+   "abstract" : "Tools for managing Locale::TextDomain language catalogs",
    "author" : [
       "David E. Wheeler <david@justatheory.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300021, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -27,24 +27,38 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp" : "0",
+            "Dist::Zilla::App" : "0",
             "Dist::Zilla::File::FromCode" : "0",
             "Dist::Zilla::Role::FileGatherer" : "0",
+            "Email::Address" : "0",
+            "Encode" : "0",
+            "File::Basename" : "0",
+            "File::Copy" : "0",
+            "File::Find::Rule" : "0",
             "File::Path" : "2.07",
+            "File::Temp" : "0",
             "IPC::Cmd" : "0",
+            "IPC::Run3" : "0",
+            "Locale::Codes::Country" : "0",
+            "Locale::Codes::Language" : "0",
             "Moose" : "0",
+            "Moose::Role" : "0",
             "Moose::Util::TypeConstraints" : "0",
             "MooseX::Types::Path::Class" : "0",
             "Path::Class" : "0",
             "namespace::autoclean" : "0",
+            "perl" : "v5.8.5",
             "strict" : "0",
             "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "Capture::Tiny" : "0",
+            "App::Cmd::Tester::CaptureExternal" : "0",
+            "Dist::Zilla::App::Tester" : "0",
             "Test::DZil" : "0",
+            "Test::File" : "0",
+            "Test::File::Contents" : "0",
             "Test::More" : "0.90"
          }
       }
@@ -57,6 +71,6 @@
          "web" : "https://github.com/theory/dist-zilla-localetextdomain"
       }
    },
-   "version" : "0.10"
+   "version" : "0.80"
 }
 

@@ -6,6 +6,7 @@ use warnings;
 use Moose;
 use Path::Class;
 use IPC::Cmd qw(can_run);
+use IPC::Run3;
 use MooseX::Types::Path::Class;
 use Moose::Util::TypeConstraints;
 use Dist::Zilla::File::FromCode;
@@ -14,12 +15,12 @@ use namespace::autoclean;
 
 with 'Dist::Zilla::Role::FileGatherer';
 
-our $VERSION = '0.10';
+our $VERSION = '0.80';
 
 use IPC::Cmd qw(can_run);
 BEGIN {
     subtype 'App', as 'Str', where { !!can_run $_ },  message {
-        qq{Cannot find "$_": Are the Unix gettext utilities installed?};
+        qq{Cannot find "$_": Are the GNU gettext utilities installed?};
     };
 }
 
@@ -47,7 +48,10 @@ has share_dir => (
 has _tmp_dir => (
     is      => 'ro',
     isa     => 'Path::Class::Dir',
-    default => sub { dir +File::Spec->tmpdir, "LocaleTextDomain.$$" },
+    default => sub {
+        require File::Temp;
+        dir File::Temp::tempdir(CLEANUP => 1);
+    },
 );
 
 has msgfmt => (
@@ -86,17 +90,12 @@ has language => (
     },
 );
 
-sub DEMOLISH {
-    my $self = shift;
-    my $dir = $self->_tmp_dir || return;
-    remove_tree $dir->stringify if -e $dir;
-}
-
 sub mvp_multivalue_args { return qw(language) }
 
 sub gather_files {
     my ($self, $arg) = @_;
 
+    my $dzil     = $self->zilla;
     my $lang_dir = $self->lang_dir;
     my $lang_ext = $self->lang_file_suffix;
     my $bin_ext  = $self->bin_file_suffix;
@@ -113,8 +112,10 @@ sub gather_files {
     );
 
     unless (-d $lang_dir) {
-        require Carp;
-        Carp::croak("Cannot search $lang_dir: no such directory");
+        $self->log(
+            "Skipping language compilation: directory $lang_dir does not exist"
+        );
+        return;
     }
 
     $self->log("Compiling language files in $lang_dir");
@@ -125,14 +126,15 @@ sub gather_files {
         my $dest = file $shr_dir, 'LocaleData', $lang, 'LC_MESSAGES',
             "$txt_dom.$bin_ext";
         my $temp = $tmp_dir->file("$lang.$bin_ext");
-        system(@cmd, $temp, $file) == 0 or do {
-            require Carp;
-            Carp::confess("Cannot compile $file");
-        };
+        my $log = sub { $self->log(@_) };
         $self->add_file(
             Dist::Zilla::File::FromCode->new({
                 name => $dest->stringify,
-                code => sub { scalar $temp->slurp(iomode => '<:raw') },
+                code => sub {
+                    run3 [@cmd, $temp, $file], undef, $log, $log;
+                    $dzil->log_fatal("Cannot compile $file") if $?;
+                    scalar $temp->slurp(iomode => '<:raw');
+                },
             })
         );
     }
@@ -152,7 +154,7 @@ Dist::Zilla::Plugin::LocaleTextDomain - Compile Local::TextDomain language files
 In F<dist.ini>:
 
   [ShareDir]
-  [@LocaleTextDomain]
+  [LocaleTextDomain]
   textdomain = My-App
   lang_dir = po
   share_dir = share
@@ -181,7 +183,7 @@ L<ShareDir plugin|Dist::Zilla::Plugin::ShareDir> will not work. You will have
 to install the compiled language files into the F<lib> directory in your
 distribution. To do so, simply set the C<share_dir> attribute to "lib":
 
-  [@LocaleTextDomain]
+  [LocaleTextDomain]
   textdomain = My-App
   lang_dir = po
   share_dir = lib
@@ -226,7 +228,7 @@ look like this:
 
 Then set it to such in your F<dist.ini>
 
-  [@LocaleTextDomain]
+  [LocaleTextDomain]
   textdomain = com.example.myApp
 
 Defaults to the name of your distribution, which is the value that

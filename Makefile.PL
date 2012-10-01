@@ -2,19 +2,22 @@
 use strict;
 use warnings;
 
-
+use 5.008005;
 
 use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Compile Local::TextDomain language files",
+  "ABSTRACT" => "Tools for managing Locale::TextDomain language catalogs",
   "AUTHOR" => "David E. Wheeler <david\@justatheory.com>",
   "BUILD_REQUIRES" => {
-    "Capture::Tiny" => 0,
+    "App::Cmd::Tester::CaptureExternal" => 0,
+    "Dist::Zilla::App::Tester" => 0,
     "Module::Build" => "0.35",
     "Test::DZil" => 0,
+    "Test::File" => 0,
+    "Test::File::Contents" => 0,
     "Test::More" => "0.90"
   },
   "CONFIGURE_REQUIRES" => {
@@ -26,12 +29,22 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Dist::Zilla::LocaleTextDomain",
   "PREREQ_PM" => {
-    "Carp" => 0,
+    "Dist::Zilla::App" => 0,
     "Dist::Zilla::File::FromCode" => 0,
     "Dist::Zilla::Role::FileGatherer" => 0,
+    "Email::Address" => 0,
+    "Encode" => 0,
+    "File::Basename" => 0,
+    "File::Copy" => 0,
+    "File::Find::Rule" => 0,
     "File::Path" => "2.07",
+    "File::Temp" => 0,
     "IPC::Cmd" => 0,
+    "IPC::Run3" => 0,
+    "Locale::Codes::Country" => 0,
+    "Locale::Codes::Language" => 0,
     "Moose" => 0,
+    "Moose::Role" => 0,
     "Moose::Util::TypeConstraints" => 0,
     "MooseX::Types::Path::Class" => 0,
     "Path::Class" => 0,
@@ -39,7 +52,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.10",
+  "VERSION" => "0.80",
   "test" => {
     "TESTS" => "t/*.t"
   }
