@@ -6,6 +6,7 @@ META.json
 META.yml
 Makefile.PL
 README.md
+inc/Dist/Zilla/LocaleTextDomainBuild.pm
 lib/Dist/Zilla/App/Command/msg_init.pm
 lib/Dist/Zilla/App/Command/msg_merge.pm
 lib/Dist/Zilla/App/Command/msg_scan.pm

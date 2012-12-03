@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Module::Build 0.35;
-
+use lib qw{inc}; use Dist::Zilla::LocaleTextDomainBuild;
 
 my %module_build_args = (
   "build_requires" => {
@@ -24,7 +24,7 @@ my %module_build_args = (
     "David E. Wheeler <david\@justatheory.com>"
   ],
   "dist_name" => "Dist-Zilla-LocaleTextDomain",
-  "dist_version" => "0.81",
+  "dist_version" => "0.82",
   "license" => "perl",
   "module_name" => "Dist::Zilla::LocaleTextDomain",
   "recommends" => {},
@@ -42,8 +42,8 @@ my %module_build_args = (
     "File::Temp" => 0,
     "IPC::Cmd" => 0,
     "IPC::Run3" => 0,
-    "Locale::Codes::Country" => 0,
-    "Locale::Codes::Language" => 0,
+    "Locale::Country" => 0,
+    "Locale::Language" => 0,
     "Moose" => 0,
     "Moose::Role" => 0,
     "Moose::Util::TypeConstraints" => 0,
@@ -58,6 +58,6 @@ my %module_build_args = (
 );
 
 
-my $build = Module::Build->new(%module_build_args);
+my $build = Dist::Zilla::LocaleTextDomainBuild->new(%module_build_args);
 
 $build->create_build_script;

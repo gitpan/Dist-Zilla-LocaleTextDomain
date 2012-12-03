@@ -41,8 +41,8 @@ my %WriteMakefileArgs = (
     "File::Temp" => 0,
     "IPC::Cmd" => 0,
     "IPC::Run3" => 0,
-    "Locale::Codes::Country" => 0,
-    "Locale::Codes::Language" => 0,
+    "Locale::Country" => 0,
+    "Locale::Language" => 0,
     "Moose" => 0,
     "Moose::Role" => 0,
     "Moose::Util::TypeConstraints" => 0,
@@ -52,7 +52,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.81",
+  "VERSION" => "0.82",
   "test" => {
     "TESTS" => "t/*.t"
   }

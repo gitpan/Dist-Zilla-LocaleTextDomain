@@ -1,5 +1,13 @@
 Revision history for Perl extension Dist-Zilla-LocaleTextDomain
 
+0.82  2012-12-03T19:06:03Z
+     - Fixed broken call to `log_fatal` in the `msg-init` command that caused
+       the actual error to be lost in favor of a bad method call error. Thanks
+       Joenio Costa for the patch.
+     - Added a note on how to get Locale::TextDomain to return character
+       strings instead of byte strings.
+     - Now refuse to build if `gettext --version` does not work at build time.
+
 0.81  2012-10-02T16:25:43Z
       - Removed tests for the `add_lang` command, which was never shipped,
         but renamed `msg_init`.
