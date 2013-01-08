@@ -46,4 +46,4 @@ requires:
   warnings: 0
 resources:
   repository: https://github.com/theory/dist-zilla-localetextdomain.git
-version: 0.84
+version: 0.85
