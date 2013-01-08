@@ -12,7 +12,7 @@ use IPC::Run3;
 use File::Find::Rule;
 use namespace::autoclean;
 
-our $VERSION = '0.83';
+our $VERSION = '0.84';
 
 with 'Dist::Zilla::Role::PotFile';
 
@@ -20,7 +20,7 @@ sub command_names { qw(msg-init) }
 
 sub abstract { 'add language translation files to a distribution' }
 
-sub usage_desc { '%c %o <language_code> [<langauge_code> ...]' }
+sub usage_desc { '%c %o <language_code> [<language_code> ...]' }
 
 sub opt_spec {
     return (
@@ -95,17 +95,17 @@ sub execute {
         '--no-translator',
     );
 
-    my $log = sub { $dzil->log(@_) };
+    my $log = sub { $plugin->log(@_) };
     for my $lang (@{ $args }) {
         # Strip off encoding.
         (my $name = $lang) =~ s/[.].+$//;
         my $dest = $lang_dir->file( $name . $lang_ext );
-        $dzil->log_fatal("$dest already exists") if -e $dest;
+        $plugin->log_fatal("$dest already exists") if -e $dest;
         run3 (
             [@cmd,  "--locale=$lang", '--output-file=' . $dest],
             undef, $log, $log
         );
-        $dzil->log_fatal("Cannot generate $dest") if $?;
+        $plugin->log_fatal("Cannot generate $dest") if $?;
     }
 }
 
@@ -181,7 +181,7 @@ David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
-This software is copyright (c) 2012 by David E. Wheeler.
+This software is copyright (c) 2012-2013 by David E. Wheeler.
 
 This is free software; you can redistribute it and/or modify it under the same
 terms as the Perl 5 programming language system itself.

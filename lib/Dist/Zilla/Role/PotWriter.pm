@@ -9,7 +9,7 @@ use File::Path qw(make_path);
 use IPC::Run3;
 use namespace::autoclean;
 
-our $VERSION = '0.83';
+our $VERSION = '0.84';
 
 sub files_to_scan {
     my $self = shift;
@@ -160,7 +160,7 @@ David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
-This software is copyright (c) 2012 by David E. Wheeler.
+This software is copyright (c) 2012-2013 by David E. Wheeler.
 
 This is free software; you can redistribute it and/or modify it under the same
 terms as the Perl 5 programming language system itself.

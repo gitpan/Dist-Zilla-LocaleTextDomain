@@ -14,7 +14,7 @@ use File::Copy;
 use File::Find::Rule;
 use namespace::autoclean;
 
-our $VERSION = '0.83';
+our $VERSION = '0.84';
 
 with 'Dist::Zilla::Role::PotFile';
 
@@ -22,7 +22,7 @@ sub command_names { qw(msg-merge) }
 
 sub abstract { 'merge localization strings into translation catalogs' }
 
-sub usage_desc { '%c %o <language_code> [<langauge_code> ...]' }
+sub usage_desc { '%c %o <language_code> [<language_code> ...]' }
 
 sub opt_spec {
     return (
@@ -77,7 +77,7 @@ sub execute {
     my $pot_file = $self->pot_file( %{ $opt } );
 
     my @pos = @{ $args } ? @{ $args } : $self->_po_files( $plugin );
-    $dzil->log_fatal("No langugage catalog files found") unless @pos;
+    $plugin->log_fatal("No language catalog files found") unless @pos;
 
     my @cmd = (
         $opt->{msgmerge},
@@ -85,11 +85,11 @@ sub execute {
         '--backup=' . ($opt->{backup} ? 'simple' : 'none'),
     );
 
-    my $log = sub { $dzil->log(@_) };
+    my $log = sub { $plugin->log(@_) };
     for my $file (@pos) {
-        $self->log("Merging gettext strings into $file");
+        $plugin->log("Merging gettext strings into $file");
         run3 [@cmd, $file, $pot_file], undef, $log, $log;
-        $dzil->log_fatal("Cannot merge into $file") if $?;
+        $plugin->log_fatal("Cannot merge into $file") if $?;
     }
 }
 
@@ -176,7 +176,7 @@ David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
-This software is copyright (c) 2012 by David E. Wheeler.
+This software is copyright (c) 2012-2013 by David E. Wheeler.
 
 This is free software; you can redistribute it and/or modify it under the same
 terms as the Perl 5 programming language system itself.
