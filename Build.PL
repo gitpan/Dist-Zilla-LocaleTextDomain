@@ -24,7 +24,7 @@ my %module_build_args = (
     "David E. Wheeler <david\@justatheory.com>"
   ],
   "dist_name" => "Dist-Zilla-LocaleTextDomain",
-  "dist_version" => "0.85",
+  "dist_version" => "0.86",
   "license" => "perl",
   "module_name" => "Dist::Zilla::LocaleTextDomain",
   "recommends" => {},
