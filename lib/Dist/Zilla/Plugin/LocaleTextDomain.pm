@@ -15,7 +15,7 @@ use namespace::autoclean;
 
 with 'Dist::Zilla::Role::FileGatherer';
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 use IPC::Cmd qw(can_run);
 BEGIN {
@@ -120,6 +120,10 @@ sub gather_files {
 
     $self->log("Compiling language files in $lang_dir");
     make_path $tmp_dir->stringify;
+    my @encoding_params = Dist::Zilla::File::FromCode->VERSION >= 5.0 ? (
+        encoding         => 'bytes',
+        code_return_type => 'bytes',
+    ) : ();
 
     for my $lang (@{ $self->language }) {
         my $file = $lang_dir->file("$lang.$lang_ext");
@@ -129,6 +133,7 @@ sub gather_files {
         my $log = sub { $self->log(@_) };
         $self->add_file(
             Dist::Zilla::File::FromCode->new({
+                @encoding_params,
                 name => $dest->stringify,
                 code => sub {
                     run3 [@cmd, $temp, $file], undef, $log, $log;

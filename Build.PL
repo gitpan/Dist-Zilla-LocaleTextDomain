@@ -7,13 +7,7 @@ use lib qw{inc}; use Dist::Zilla::LocaleTextDomainBuild;
 
 my %module_build_args = (
   "build_requires" => {
-    "App::Cmd::Tester::CaptureExternal" => 0,
-    "Dist::Zilla::App::Tester" => 0,
-    "Module::Build" => "0.35",
-    "Test::DZil" => 0,
-    "Test::File" => 0,
-    "Test::File::Contents" => 0,
-    "Test::More" => "0.90"
+    "Module::Build" => "0.35"
   },
   "configure_requires" => {
     "ExtUtils::MakeMaker" => "6.30",
@@ -24,7 +18,7 @@ my %module_build_args = (
     "David E. Wheeler <david\@justatheory.com>"
   ],
   "dist_name" => "Dist-Zilla-LocaleTextDomain",
-  "dist_version" => "0.86",
+  "dist_version" => "0.87",
   "license" => "perl",
   "module_name" => "Dist::Zilla::LocaleTextDomain",
   "recommends" => {},
@@ -54,9 +48,33 @@ my %module_build_args = (
     "strict" => 0,
     "warnings" => 0
   },
-  "script_files" => []
+  "script_files" => [],
+  "test_requires" => {
+    "App::Cmd::Tester::CaptureExternal" => 0,
+    "Dist::Zilla::App::Tester" => 0,
+    "Test::DZil" => 0,
+    "Test::File" => 0,
+    "Test::File::Contents" => 0,
+    "Test::More" => "0.90"
+  }
 );
 
+
+my %fallback_build_requires = (
+  "App::Cmd::Tester::CaptureExternal" => 0,
+  "Dist::Zilla::App::Tester" => 0,
+  "Module::Build" => "0.35",
+  "Test::DZil" => 0,
+  "Test::File" => 0,
+  "Test::File::Contents" => 0,
+  "Test::More" => "0.90"
+);
+
+
+unless ( eval { Module::Build->VERSION(0.4004) } ) {
+  delete $module_build_args{test_requires};
+  $module_build_args{build_requires} = \%fallback_build_requires;
+}
 
 my $build = Dist::Zilla::LocaleTextDomainBuild->new(%module_build_args);
 
