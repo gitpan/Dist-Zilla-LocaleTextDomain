@@ -4,7 +4,7 @@
       "David E. Wheeler <david@justatheory.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
+   "generated_by" : "Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -21,7 +21,7 @@
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30",
+            "ExtUtils::MakeMaker" : "0",
             "Module::Build" : "0.35"
          }
       },
@@ -29,6 +29,7 @@
          "requires" : {
             "Dist::Zilla::App" : "0",
             "Dist::Zilla::File::FromCode" : "0",
+            "Dist::Zilla::Role::FileFinderUser" : "0",
             "Dist::Zilla::Role::FileGatherer" : "0",
             "Email::Address" : "0",
             "Encode" : "0",
@@ -71,6 +72,6 @@
          "web" : "https://github.com/theory/dist-zilla-localetextdomain"
       }
    },
-   "version" : "0.87"
+   "version" : "0.90"
 }
 

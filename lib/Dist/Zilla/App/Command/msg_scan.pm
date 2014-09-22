@@ -8,7 +8,7 @@ use warnings;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '0.87';
+our $VERSION = '0.90';
 
 with 'Dist::Zilla::Role::PotWriter';
 

@@ -9,16 +9,19 @@ use File::Path qw(make_path);
 use IPC::Run3;
 use namespace::autoclean;
 
-our $VERSION = '0.87';
+our $VERSION = '0.90';
 
 sub files_to_scan {
     my $self = shift;
     my $dzil = $self->zilla;
     $dzil->chrome->logger->mute;
-    $_->gather_files for @{ $dzil->plugins_with(-FileGatherer) };
+    $_->gather_files for grep {
+        ! $_->isa('Dist::Zilla::Plugin::LocaleTextDomain')
+    } @{ $dzil->plugins_with(-FileGatherer) };
     $dzil->chrome->logger->unmute;
-    # XXX Consider replacing with a LocaleTextDomain-specific file finder?
-    return grep { /[.]pm\z/ } map { $_->name } @{ $dzil->files };
+    my $plugin = $dzil->plugin_named('LocaleTextDomain')
+        or $dzil->log_fatal('LocaleTextDomain plugin not found in dist.ini!');
+    return map { $_->name() } @{ $plugin->found_files() };
 }
 
 sub write_pot {
